@@ -81,10 +81,10 @@ export function FilterSection({
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="all">All Prices</SelectItem>
-                                <SelectItem value="under-200">Under $200</SelectItem>
-                                <SelectItem value="200-500">$200 - $500</SelectItem>
-                                <SelectItem value="500-1000">$500 - $1000</SelectItem>
-                                <SelectItem value="over-1000">Over $1000</SelectItem>
+                                <SelectItem value="under-200">Under ₹200</SelectItem>
+                                <SelectItem value="200-500">₹200 - ₹500</SelectItem>
+                                <SelectItem value="500-1000">₹500 - ₹1000</SelectItem>
+                                <SelectItem value="over-1000">Over ₹1000</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>

@@ -2,17 +2,9 @@ import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card'
+import { Shoe } from '@/lib/types'
 
-interface Shoe {
-    id: string
-    name: string
-    brand: string
-    size: string
-    condition: string
-    currentBid: number
-    image?: string
-    category: string
-}
+
 
 interface ShoeCardProps {
     shoe: Shoe
@@ -21,7 +13,7 @@ interface ShoeCardProps {
 export function ShoeCard({ shoe }: ShoeCardProps) {
     return (
         <Link to={`/product/${shoe.id}`} className="group block">
-            <Card className="overflow-hidden hover:shadow-lg transition-all duration-200 group-hover:border-foreground/20">
+            <Card className="overflow-hidden hover:shadow-lg transition-all duration-200 group-hover:border-foreground/20 rounded-none">
                 <CardHeader className="p-0">
                     <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">
                         <img
@@ -52,8 +44,8 @@ export function ShoeCard({ shoe }: ShoeCardProps) {
                 <CardFooter className="p-4 pt-0">
                     <div className="flex items-center justify-between w-full">
                         <div>
-                            <p className="text-xs text-muted-foreground">Current Bid</p>
-                            <span className="text-lg font-bold text-foreground">${shoe.currentBid}</span>
+                            <p className="text-xs text-muted-foreground">Lowest Bid</p>
+                            <span className="text-lg font-bold text-foreground">₹{shoe.lowestBid}</span>
                         </div>
                         <Button size="sm" className="shrink-0">
                             Place Bid
