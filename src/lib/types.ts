@@ -4,7 +4,7 @@ export interface Shoe {
     brand: string
     size: string
     condition: string
-    currentBid: number
+    lowestBid: number
     image?: string
     category: string
 }
