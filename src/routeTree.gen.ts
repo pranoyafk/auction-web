@@ -14,6 +14,7 @@ import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
 import { Route as AuthSigninRouteImport } from './routes/_auth/signin'
+import { Route as AppMyBidsRouteImport } from './routes/_app/my-bids'
 import { Route as AppShoeShoeIdRouteImport } from './routes/_app/shoe/$shoeId'
 
 const AuthRoute = AuthRouteImport.update({
@@ -39,6 +40,11 @@ const AuthSigninRoute = AuthSigninRouteImport.update({
   path: '/signin',
   getParentRoute: () => AuthRoute,
 } as any)
+const AppMyBidsRoute = AppMyBidsRouteImport.update({
+  id: '/my-bids',
+  path: '/my-bids',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppShoeShoeIdRoute = AppShoeShoeIdRouteImport.update({
   id: '/shoe/$shoeId',
   path: '/shoe/$shoeId',
@@ -46,12 +52,14 @@ const AppShoeShoeIdRoute = AppShoeShoeIdRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/my-bids': typeof AppMyBidsRoute
   '/signin': typeof AuthSigninRoute
   '/signup': typeof AuthSignupRoute
   '/': typeof AppIndexRoute
   '/shoe/$shoeId': typeof AppShoeShoeIdRoute
 }
 export interface FileRoutesByTo {
+  '/my-bids': typeof AppMyBidsRoute
   '/signin': typeof AuthSigninRoute
   '/signup': typeof AuthSignupRoute
   '/': typeof AppIndexRoute
@@ -61,6 +69,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
+  '/_app/my-bids': typeof AppMyBidsRoute
   '/_auth/signin': typeof AuthSigninRoute
   '/_auth/signup': typeof AuthSignupRoute
   '/_app/': typeof AppIndexRoute
@@ -68,13 +77,14 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/signin' | '/signup' | '/' | '/shoe/$shoeId'
+  fullPaths: '/my-bids' | '/signin' | '/signup' | '/' | '/shoe/$shoeId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/signin' | '/signup' | '/' | '/shoe/$shoeId'
+  to: '/my-bids' | '/signin' | '/signup' | '/' | '/shoe/$shoeId'
   id:
     | '__root__'
     | '/_app'
     | '/_auth'
+    | '/_app/my-bids'
     | '/_auth/signin'
     | '/_auth/signup'
     | '/_app/'
@@ -123,6 +133,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSigninRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_app/my-bids': {
+      id: '/_app/my-bids'
+      path: '/my-bids'
+      fullPath: '/my-bids'
+      preLoaderRoute: typeof AppMyBidsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/shoe/$shoeId': {
       id: '/_app/shoe/$shoeId'
       path: '/shoe/$shoeId'
@@ -134,11 +151,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppMyBidsRoute: typeof AppMyBidsRoute
   AppIndexRoute: typeof AppIndexRoute
   AppShoeShoeIdRoute: typeof AppShoeShoeIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppMyBidsRoute: AppMyBidsRoute,
   AppIndexRoute: AppIndexRoute,
   AppShoeShoeIdRoute: AppShoeShoeIdRoute,
 }
