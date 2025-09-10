@@ -7,6 +7,7 @@ import { useState } from "react"
 import { Shoe } from "@/lib/types"
 
 import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group"
+import { cn } from "@/lib/utils"
 
 interface AuctionCardProps {
     shoe: Shoe
@@ -125,20 +126,17 @@ export function AuctionCard({ shoe }: AuctionCardProps) {
                         <div className="space-y-4">
                             <Label htmlFor="bidAmount">Select Size</Label>
 
-                            <ToggleGroup
-                                type="single"
-                                className="grid grid-cols-4 gap-2"
-                                value={selectedSize}
-                                onValueChange={(value) => {
-                                    if (value) setSelectedSize(value);
-                                }}
-                            >
+                            <div className="grid grid-cols-4 gap-2">
                                 {shoeSizes.map((size) => (
-                                    <ToggleGroupItem className="rounded-md border" variant='default' key={size} value={size}>
+                                    <button
+                                        onClick={() => {
+                                            setSelectedSize(size)
+                                        }} className={cn('px-2 py-1 rounded-md border text-center', size === selectedSize ?
+                                            'bg-primary text-primary-foreground' : 'hover:bg-accent-foreground/10 text-muted-foreground')} key={size}>
                                         {size}
-                                    </ToggleGroupItem>
+                                    </button>
                                 ))}
-                            </ToggleGroup>
+                            </div>
                         </div>
 
                         <Button type="submit" className="w-full" disabled={isLoading}>
@@ -163,6 +161,6 @@ export function AuctionCard({ shoe }: AuctionCardProps) {
                     </div>
                 )}
             </CardContent>
-        </Card>
+        </Card >
     )
 }
