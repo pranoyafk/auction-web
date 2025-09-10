@@ -12,7 +12,9 @@ interface ShoeCardProps {
 
 export function ShoeCard({ shoe }: ShoeCardProps) {
     return (
-        <Link to={`/product/${shoe.id}`} className="group block">
+        <Link to='/shoe/$shoeId' params={{
+            shoeId: shoe.id
+        }} className="group block">
             <Card className="overflow-hidden hover:shadow-lg transition-all duration-200 group-hover:border-foreground/20 rounded-none">
                 <CardHeader className="p-0">
                     <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">

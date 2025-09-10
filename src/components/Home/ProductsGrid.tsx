@@ -1,16 +1,8 @@
 import { Button } from '@/components/ui/button'
 import { ShoeCard } from './ShoeCard'
+import { Shoe } from '@/lib/types'
 
-interface Shoe {
-    id: string
-    name: string
-    brand: string
-    size: string
-    condition: string
-    currentBid: number
-    image?: string
-    category: string
-}
+
 
 interface ProductsGridProps {
     filteredShoes: Shoe[]

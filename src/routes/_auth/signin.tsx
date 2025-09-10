@@ -5,44 +5,30 @@ import { Label } from '@/components/ui/label'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState } from 'react'
 
-
-export const Route = createFileRoute('/signup')({
+export const Route = createFileRoute('/_auth/signin')({
     component: RouteComponent,
 })
 
 function RouteComponent() {
-    const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         // TODO: Implement authentication logic
-        console.log("Sign up:", { name, email, password })
+        console.log("Sign in:", { email, password })
     }
 
     return (
         <div className="min-h-screen bg-background flex items-center justify-center px-4">
             <div className="w-full max-w-md">
-
                 <Card>
                     <CardHeader className="text-center">
-                        <CardTitle className="text-2xl">Create your account</CardTitle>
-                        <CardDescription>Join thousands of sellers getting top dollar for their shoes</CardDescription>
+                        <CardTitle className="text-2xl">Welcome back</CardTitle>
+                        <CardDescription>Sign in to your account to continue selling</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="name">Full Name</Label>
-                                <Input
-                                    id="name"
-                                    type="text"
-                                    placeholder="Enter your full name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    required
-                                />
-                            </div>
                             <div className="space-y-2">
                                 <Label htmlFor="email">Email</Label>
                                 <Input
@@ -59,22 +45,22 @@ function RouteComponent() {
                                 <Input
                                     id="password"
                                     type="password"
-                                    placeholder="Create a password"
+                                    placeholder="Enter your password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
                                 />
                             </div>
                             <Button type="submit" className="w-full">
-                                Create Account
+                                Sign In
                             </Button>
                         </form>
 
                         <div className="mt-6 text-center">
                             <p className="text-muted-foreground">
-                                Already have an account?{" "}
-                                <Link to="/signin" className="text-primary hover:underline">
-                                    Sign in
+                                Don't have an account?{" "}
+                                <Link to="/signup" className="text-primary hover:underline">
+                                    Sign up
                                 </Link>
                             </p>
                         </div>
