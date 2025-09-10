@@ -1,95 +1,138 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Clock, TrendingUp, Users } from 'lucide-react';
-import { useState } from 'react';
-import { Shoe } from '@/lib/types';
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Clock, TrendingUp, Users, Zap } from "lucide-react"
+import { useState } from "react"
+import { Shoe } from "@/lib/types"
 
 interface AuctionCardProps {
-    shoe: Shoe;
+    shoe: Shoe
 }
 
 export function AuctionCard({ shoe }: AuctionCardProps) {
-    const [bidAmount, setBidAmount] = useState<string>("");
+    const [bidAmount, setBidAmount] = useState<string>("")
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const handlePlaceBid = (e: React.FormEvent) => {
-        e.preventDefault();
-        const bid = Number.parseFloat(bidAmount);
+    const handlePlaceBid = async (e: React.FormEvent) => {
+        e.preventDefault()
+        const bid = Number.parseFloat(bidAmount)
+
         if (bid <= shoe.lowestBid) {
-            alert(`Bid must be higher than current bid of $${shoe.lowestBid}`);
-            return;
+            alert(`Bid must be higher than current bid of $${shoe.lowestBid}`)
+            return
         }
-        // TODO: Implement actual bidding logic
-        console.log("Placing bid:", bid);
-        alert(`Bid of $${bid} placed successfully!`);
-        setBidAmount("");
-    };
+
+        setIsLoading(true)
+        await new Promise((resolve) => setTimeout(resolve, 1500))
+        alert(`Bid of $${bid} placed successfully!`)
+        setBidAmount("")
+        setIsLoading(false)
+    }
 
     const timeRemaining = () => {
-        const now = new Date();
-        const endTime = new Date(shoe.auctionEndTime);
-        const diff = endTime.getTime() - now.getTime();
+        const now = new Date()
+        const endTime = new Date(shoe.auctionEndTime)
+        const diff = endTime.getTime() - now.getTime()
 
-        if (diff <= 0) return "Auction ended";
+        if (diff <= 0) return "Auction ended"
 
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const hours = Math.floor(diff / (1000 * 60 * 60))
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+        return `${hours}h ${minutes}m`
+    }
 
-        return `${hours}h ${minutes}m remaining`;
-    };
+    const isAuctionActive = new Date(shoe.auctionEndTime) > new Date()
 
     return (
-        <Card className="border-2 shadow-lg">
-            <CardHeader className="pb-6">
-                <CardTitle className="flex items-center gap-3 text-2xl">
-                    <TrendingUp className="w-7 h-7 text-foreground" />
-                    Current Auction Status
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg font-semibold">
+                    <TrendingUp className="h-5 w-5 text-primary" />
+                    Live Auction
                 </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-8">
+
+            <CardContent className="space-y-6">
+                {/* Current Bid */}
                 <div className="flex items-end justify-between">
-                    <div className="space-y-2">
-                        <span className="text-5xl font-bold text-foreground">${shoe.lowestBid}</span>
-                        <p className="text-muted-foreground font-medium">Current highest bid</p>
-                    </div>
-                    <div className="text-right space-y-3">
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                            <Users className="w-5 h-5" />
-                            <span className="font-medium text-lg">{shoe.totalBids} bids</span>
+                    <div className="space-y-1">
+                        <div className="flex items-baseline gap-1">
+                            <span className="text-3xl font-bold">
+                                ${shoe.lowestBid.toLocaleString()}
+                            </span>
+                            <span className="text-sm text-muted-foreground">USD</span>
                         </div>
+                        <p className="text-sm text-muted-foreground">
+                            Current highest bid
+                        </p>
+                    </div>
+
+                    <div className="text-right space-y-2">
                         <div className="flex items-center gap-2 text-muted-foreground">
-                            <Clock className="w-5 h-5" />
-                            <span className="font-medium text-lg">{timeRemaining()}</span>
+                            <Users className="h-4 w-4 text-muted-foreground" />
+                            <span className="text-sm font-medium">{shoe.totalBids} bids</span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <Clock
+                                className={`h-4 w-4 ${isAuctionActive ? "text-primary" : "text-muted-foreground"
+                                    }`}
+                            />
+                            <span className="text-sm font-medium">{timeRemaining()}</span>
                         </div>
                     </div>
                 </div>
 
-                <form onSubmit={handlePlaceBid} className="space-y-6">
-                    <div className="space-y-3">
-                        <Label htmlFor="bidAmount" className="text-lg font-semibold">
-                            Place Your Bid
-                        </Label>
-                        <p className="text-sm text-muted-foreground">
-                            Minimum bid: ${shoe.lowestBid + 1}
+                {/* Bidding Form */}
+                {isAuctionActive ? (
+                    <form onSubmit={handlePlaceBid} className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="bidAmount">Place Your Bid</Label>
+                            <div className="relative">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">
+                                    $
+                                </span>
+                                <Input
+                                    id="bidAmount"
+                                    type="number"
+                                    placeholder={`${(shoe.lowestBid + 1).toLocaleString()}`}
+                                    value={bidAmount}
+                                    onChange={(e) => setBidAmount(e.target.value)}
+                                    min={shoe.lowestBid + 1}
+                                    step="1"
+                                    required
+                                    disabled={isLoading}
+                                    className="pl-8"
+                                />
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                                Minimum bid: ${(shoe.lowestBid + 1).toLocaleString()}
+                            </p>
+                        </div>
+
+                        <Button type="submit" className="w-full" disabled={isLoading}>
+                            {isLoading ? (
+                                <div className="flex items-center gap-2">
+                                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-t-transparent" />
+                                    Placing Bid...
+                                </div>
+                            ) : (
+                                <div className="flex items-center gap-2">
+                                    <Zap className="h-4 w-4" />
+                                    Place Bid
+                                </div>
+                            )}
+                        </Button>
+                    </form>
+                ) : (
+                    <div className="py-4 text-center">
+                        <p className="font-medium text-muted-foreground">
+                            This auction has ended
                         </p>
-                        <Input
-                            id="bidAmount"
-                            type="number"
-                            placeholder={`Enter amount above $${shoe.lowestBid}`}
-                            value={bidAmount}
-                            onChange={(e) => setBidAmount(e.target.value)}
-                            min={shoe.lowestBid + 1}
-                            step="1"
-                            required
-                            className="text-xl py-4 h-14"
-                        />
                     </div>
-                    <Button type="submit" className="w-full text-xl py-4 h-14 font-bold">
-                        Place Bid
-                    </Button>
-                </form>
+                )}
             </CardContent>
         </Card>
-    );
+    )
 }

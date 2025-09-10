@@ -27,34 +27,39 @@ export function BidCard({ bid }: BidCardProps) {
     }
 
     return (
-        <Card className="overflow-hidden rounded-2xl shadow-md hover:shadow-lg transition-shadow">
+        <Card>
             <CardContent className="p-0">
                 <div className="flex">
                     {/* Image Section */}
-                    <div className="w-40 h-40 bg-muted flex-shrink-0">
+                    <div className="flex-shrink-0 w-40 h-40 rounded-lg overflow-hidden">
                         <img
                             src={bid.image || "/placeholder.svg"}
                             alt={bid.shoeName}
-                            className="w-full h-full object-contain"
+                            className="h-full w-full object-contain"
                         />
                     </div>
 
                     {/* Info Section */}
-                    <div className="flex-1 flex flex-col justify-between p-5">
+                    <div className="flex flex-1 flex-col justify-between p-5">
                         <div>
                             {/* Header */}
-                            <div className="flex items-start justify-between mb-2">
+                            <div className="mb-2 flex items-start justify-between">
                                 <div>
-                                    <h3 className="font-semibold text-lg leading-tight">{bid.shoeName}</h3>
+                                    <h3 className="text-lg font-semibold leading-tight">
+                                        {bid.shoeName}
+                                    </h3>
                                     <p className="text-sm text-muted-foreground">
                                         {bid.brand} • Size {bid.size}
                                     </p>
                                 </div>
-                                <BidStatusBadge status={bid.status} isUserHighest={bid.isUserHighest} />
+                                <BidStatusBadge
+                                    status={bid.status}
+                                    isUserHighest={bid.isUserHighest}
+                                />
                             </div>
 
                             {/* Bid info */}
-                            <div className="grid grid-cols-2 gap-6 mt-3">
+                            <div className="mt-3 grid grid-cols-2 gap-6">
                                 <div>
                                     <p className="text-xs text-muted-foreground">Your Bid</p>
                                     <p className="text-xl font-bold">${bid.userBid.toLocaleString()}</p>
@@ -69,23 +74,23 @@ export function BidCard({ bid }: BidCardProps) {
                         </div>
 
                         {/* Footer */}
-                        <div className="flex items-center justify-between mt-5">
-                            <div className="flex items-center text-sm text-muted-foreground">
+                        <div className="mt-5 flex items-center justify-between text-sm text-muted-foreground">
+                            <div className="flex items-center gap-1">
                                 {bid.status === "active" ? (
                                     <>
-                                        <Clock className="w-4 h-4 mr-1" />
-                                        {getTimeRemaining(bid.auctionEndTime)}
+                                        <Clock className="h-4 w-4" />
+                                        <span>{getTimeRemaining(bid.auctionEndTime)}</span>
                                     </>
                                 ) : (
                                     <>
-                                        <CheckCircle className="w-4 h-4 mr-1" />
-                                        Ended
+                                        <CheckCircle className="h-4 w-4" />
+                                        <span>Ended</span>
                                     </>
                                 )}
                             </div>
                             <Link to="/shoe/$shoeId" params={{ shoeId: bid.shoeId }}>
-                                <Button size="sm" className="rounded-xl">
-                                    <Eye className="w-4 h-4 mr-2" />
+                                <Button size="sm">
+                                    <Eye className="h-4 w-4 mr-2" />
                                     View
                                 </Button>
                             </Link>
