@@ -46,7 +46,7 @@ function RouteComponent() {
     return (
         <div className="min-h-screen bg-background">
             {/* Background Pattern */}
-            <div className="fixed inset-0 opacity-30 dark:opacity-20">
+            <div className="fixed inset-0 opacity-30 dark:opacity-20 z-[-1]">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,0,255,0.1)_0%,transparent_50%)]"></div>
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[length:60px_60px]"></div>
             </div>

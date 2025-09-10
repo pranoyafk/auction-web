@@ -15,7 +15,7 @@ export function ShoeCard({ shoe }: ShoeCardProps) {
         <Link to='/shoe/$shoeId' params={{
             shoeId: shoe.id
         }} className="group block">
-            <Card className="overflow-hidden hover:shadow-lg transition-all duration-200 group-hover:border-foreground/20 rounded-none">
+            <Card className="overflow-hidden hover:shadow-lg transition-all duration-200 group-hover:border-foreground/20">
                 <CardHeader className="p-0">
                     <div className="aspect-square flex items-center justify-center overflow-hidden">
                         <img
@@ -36,11 +36,7 @@ export function ShoeCard({ shoe }: ShoeCardProps) {
                         </Badge>
                     </div>
 
-                    <div className="flex items-center gap-2 mb-3 text-xs md:text-sm">
-                        <span className="text-muted-foreground">Size {shoe.size}</span>
-                        <span className="text-muted-foreground">•</span>
-                        <span className="text-muted-foreground">{shoe.condition}</span>
-                    </div>
+                    <span className="text-muted-foreground">Size {shoe.size}</span>
                 </CardContent>
 
                 <CardFooter className="p-4 pt-0">

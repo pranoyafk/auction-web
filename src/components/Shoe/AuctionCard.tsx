@@ -6,13 +6,22 @@ import { Clock, TrendingUp, Users, Zap } from "lucide-react"
 import { useState } from "react"
 import { Shoe } from "@/lib/types"
 
+import { ToggleGroup, ToggleGroupItem } from "../ui/toggle-group"
+
 interface AuctionCardProps {
     shoe: Shoe
 }
-
+const shoeSizes = [
+    "UK 5", "UK 5.5", "UK 6", "UK 6.5",
+    "UK 7", "UK 7.5", "UK 8", "UK 8.5",
+    "UK 9", "UK 9.5", "UK 10", "UK 10.5",
+    "UK 11", "UK 11.5"
+];
 export function AuctionCard({ shoe }: AuctionCardProps) {
     const [bidAmount, setBidAmount] = useState<string>("")
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [selectedSize, setSelectedSize] = useState<string>();
+
 
     const handlePlaceBid = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -42,7 +51,9 @@ export function AuctionCard({ shoe }: AuctionCardProps) {
         return `${hours}h ${minutes}m`
     }
 
-    const isAuctionActive = new Date(shoe.auctionEndTime) > new Date()
+    const isAuctionActive = true
+
+
 
     return (
         <Card>
@@ -109,6 +120,25 @@ export function AuctionCard({ shoe }: AuctionCardProps) {
                             <p className="text-xs text-muted-foreground">
                                 Minimum bid: ${(shoe.lowestBid + 1).toLocaleString()}
                             </p>
+                        </div>
+
+                        <div className="space-y-4">
+                            <Label htmlFor="bidAmount">Select Size</Label>
+
+                            <ToggleGroup
+                                type="single"
+                                className="grid grid-cols-4 gap-2"
+                                value={selectedSize}
+                                onValueChange={(value) => {
+                                    if (value) setSelectedSize(value);
+                                }}
+                            >
+                                {shoeSizes.map((size) => (
+                                    <ToggleGroupItem className="rounded-md border" variant='default' key={size} value={size}>
+                                        {size}
+                                    </ToggleGroupItem>
+                                ))}
+                            </ToggleGroup>
                         </div>
 
                         <Button type="submit" className="w-full" disabled={isLoading}>

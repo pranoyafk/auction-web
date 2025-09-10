@@ -7,7 +7,6 @@ export function useShoeFilters(shoes: Shoe[]) {
     const [searchTerm, setSearchTerm] = useState("")
     const [selectedBrand, setSelectedBrand] = useState("all")
     const [selectedCategory, setSelectedCategory] = useState("all")
-    const [selectedCondition, setSelectedCondition] = useState("all")
     const [priceRange, setPriceRange] = useState("all")
 
     const filteredShoes = useMemo(() => {
@@ -17,11 +16,10 @@ export function useShoeFilters(shoes: Shoe[]) {
                 shoe.brand.toLowerCase().includes(searchTerm.toLowerCase())
             const matchesBrand = selectedBrand === "all" || shoe.brand === selectedBrand
             const matchesCategory = selectedCategory === "all" || shoe.category === selectedCategory
-            const matchesCondition = selectedCondition === "all" || shoe.condition === selectedCondition
 
             let matchesPrice = true
             if (priceRange !== "all") {
-                const price = shoe.currentBid
+                const price = shoe.lowestBid
                 switch (priceRange) {
                     case "under-200":
                         matchesPrice = price < 200
@@ -38,15 +36,14 @@ export function useShoeFilters(shoes: Shoe[]) {
                 }
             }
 
-            return matchesSearch && matchesBrand && matchesCategory && matchesCondition && matchesPrice
+            return matchesSearch && matchesBrand && matchesCategory && matchesPrice
         })
-    }, [shoes, searchTerm, selectedBrand, selectedCategory, selectedCondition, priceRange])
+    }, [shoes, searchTerm, selectedBrand, selectedCategory, priceRange])
 
     const clearFilters = () => {
         setSearchTerm("")
         setSelectedBrand("all")
         setSelectedCategory("all")
-        setSelectedCondition("all")
         setPriceRange("all")
     }
 
@@ -57,8 +54,6 @@ export function useShoeFilters(shoes: Shoe[]) {
         setSelectedBrand,
         selectedCategory,
         setSelectedCategory,
-        selectedCondition,
-        setSelectedCondition,
         priceRange,
         setPriceRange,
         filteredShoes,

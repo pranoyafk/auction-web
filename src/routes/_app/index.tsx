@@ -4,6 +4,7 @@ import { useShoeFilters } from '@/hooks/useShoeFilters'
 import { HeroSection } from '@/components/Home/HeroSection'
 import { FilterSection } from '@/components/Home/FilterSection'
 import { ProductsGrid } from '@/components/Home/ProductsGrid'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/_app/')({
     component: RouteComponent,
@@ -17,14 +18,12 @@ function RouteComponent() {
         setSelectedBrand,
         selectedCategory,
         setSelectedCategory,
-        selectedCondition,
-        setSelectedCondition,
         priceRange,
         setPriceRange,
         filteredShoes,
         clearFilters
     } = useShoeFilters(mockShoes)
-
+    const [selectedSize, setSelectedSize] = useState<string>('');
     return (
         <div className="min-h-screen bg-background">
             <HeroSection />
@@ -36,10 +35,12 @@ function RouteComponent() {
                 setSelectedBrand={setSelectedBrand}
                 selectedCategory={selectedCategory}
                 setSelectedCategory={setSelectedCategory}
-                selectedCondition={selectedCondition}
-                setSelectedCondition={setSelectedCondition}
                 priceRange={priceRange}
                 setPriceRange={setPriceRange}
+                onClearFilters={clearFilters}
+                selectedSize={selectedSize}
+                setSelectedSize={setSelectedSize}
+
             />
 
             <ProductsGrid

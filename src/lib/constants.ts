@@ -34,7 +34,7 @@ export const mockShoes: Shoe[] = [
     lowestBid: 280,
     category: "Lifestyle",
     image: "https://dawntown.co.in/cdn/shop/files/tenis_masculino_on_running_cloudtilt_black_ivory_11511_1_d25582d82da9590232050b362e9e825d.webp?v=1749479506&width=600",
-    auctionEndTime: "2024-12-20T18:00:00Z",
+    auctionEndTime: '2025-09-12T07:58:50+00:00',
     totalBids: 23,
     bidHistory: [
       { amount: 450, time: "2 hours ago", bidder: "User***23" },

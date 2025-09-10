@@ -1,14 +1,14 @@
-"use client"
 import { Button } from "@/components/ui/button"
 import { navLinks } from "@/lib/constants"
-import { Link } from "@tanstack/react-router"
+import { cn } from "@/lib/utils";
+import { Link, useLocation } from "@tanstack/react-router"
 
 export function Header() {
-
-
-
+    const location = useLocation();
     return (
-        <header className="sm:block hidden sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <header className={cn("sm:block hidden w-full border-b border-border", {
+            'supports-[backdrop-filter]:bg-background/70 z-50 backdrop-blur sticky top-0': location.pathname !== '/'
+        })}>
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
 
                 <div className="flex gap-6">
