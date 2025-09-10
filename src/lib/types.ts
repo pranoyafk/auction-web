@@ -4,7 +4,6 @@ export interface Shoe {
     description: string;
     brand: string
     size: string
-    condition: string
     lowestBid: number
     image?: string
     category: string;
@@ -18,4 +17,6 @@ export interface Shoe {
         style: string,
         retailPrice: string,
     },
+}export interface UserBid {
+    id: string; shoeId: string; shoeName: string; brand: string; size: string; image: string | undefined; userBid: number; currentHighestBid: number; isUserHighest: boolean; auctionEndTime: string; status: string; bidPlacedTime: string
 }
