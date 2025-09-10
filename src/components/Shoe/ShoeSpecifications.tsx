@@ -8,7 +8,6 @@ interface ShoeSpecificationsProps {
 export function ShoeSpecifications({ shoe }: ShoeSpecificationsProps) {
     const specifications = [
         { label: 'Size', value: shoe.size },
-        { label: 'Condition', value: shoe.condition },
         { label: 'Colorway', value: shoe.details.colorway },
         { label: 'Release Year', value: shoe.details.releaseYear },
         { label: 'Style Code', value: shoe.details.style },
